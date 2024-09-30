@@ -15,8 +15,8 @@ import { createPinia } from 'pinia';
 const app = createApp(App)
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBNy0GfUOqAVfJIieVN190AGmyuxXr2MBc",
-    authDomain: "drivers-c5ddd.firebaseapp.com",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
     projectId: "drivers-c5ddd",
     storageBucket: "drivers-c5ddd.appspot.com",
     messagingSenderId: "105505764677",
