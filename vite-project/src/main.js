@@ -2,11 +2,17 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 
+import 'primevue/resources/themes/saga-blue/theme.css'
+import 'primeicons/primeicons.css'
+import 'primeflex/primeflex.css'
+
 import Primevue from 'primevue/config'
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Button from 'primevue/button'
+
 
 import { initializeApp, getApps, deleteApp } from "firebase/app"
 
@@ -34,9 +40,12 @@ const firebaseConfig = {
   
 
 app.use(createPinia())
+
 app.use(Primevue)
 app.use(ToastService)
+
 app.component('toast-service', Toast)
 app.component('app-table', DataTable)
 app.component('app-column', Column)
+app.component('app-button', Button)
 app.mount('#app')
