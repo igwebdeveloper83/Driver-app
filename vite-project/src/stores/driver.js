@@ -1,7 +1,7 @@
 // store.js
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { collection, getDocs, addDoc, updateDoc, getFirestore, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, updateDoc, getFirestore, doc } from 'firebase/firestore';
 
 export const useDriverStore = defineStore('driverStore', () => {
   const drivers = ref([]);
@@ -21,15 +21,14 @@ export const useDriverStore = defineStore('driverStore', () => {
     
     // Map through the documents to extract their data
     drivers.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-    console.log('Fetched drivers:', drivers.value);
     
   } catch (error) {
     console.error('Error fetching drivers:', error);
     
   }
   return drivers.value;
-};
+ };
+
   // Add a new driver to Firestore
   const addDriver = async (driverName) => {
     try {
@@ -54,6 +53,19 @@ export const useDriverStore = defineStore('driverStore', () => {
     }
   };
 
+  const deleteDriver = async (driverId) => {
+    try {
+      const driverDoc = doc(db, 'drivers', driverId);
+      await deleteDoc(driverDoc); // Deletes the driver from Firestore
+      drivers.value = drivers.value.filter((driver) => driver.id !== driverId); // Update local state
+    } catch (error) {
+      console.error('Error deleting driver:', error);
+      throw error;
+    }
+  };
 
-  return { drivers, addDriver,fetchDrivers, updateDriverFuelCard};
+
+
+
+  return { drivers, addDriver,fetchDrivers, updateDriverFuelCard, deleteDriver};
 });
